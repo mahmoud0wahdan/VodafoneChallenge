@@ -1,14 +1,12 @@
-package com.example.vodafoneairlinechallenge.ui
+package com.example.vodafoneairlinechallenge.ui.airlinesList
 
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import com.example.vodafoneairlinechallenge.R
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineItemBinding
 
-import com.example.vodafoneairlinechallenge.ui.placeholder.PlaceholderContent.PlaceholderItem
+import com.example.vodafoneairlinechallenge.ui.airlinesList.placeholder.PlaceholderContent.PlaceholderItem
 
 
 /**

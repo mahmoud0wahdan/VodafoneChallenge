@@ -1,4 +1,4 @@
-package com.example.vodafoneairlinechallenge.data.dataSource.database
+package com.example.vodafoneairlinechallenge.data.dataSourceManager.database
 
 import androidx.room.Dao
 import androidx.room.Insert

@@ -2,10 +2,10 @@ package com.example.vodafoneairlinechallenge.di
 
 
 import com.example.vodafoneairlinechallenge.BuildConfig
-import com.example.vodafoneairlinechallenge.data.dataSource.network.VodafoneAirlineAPI
+import com.example.vodafoneairlinechallenge.data.dataSourceManager.network.VodafoneAirlineAPI
 import com.example.vodafoneairlinechallenge.utils.Constants
-import com.example.vodafoneairlinechallenge.data.dataSource.network.APIHelper
-import com.example.vodafoneairlinechallenge.data.dataSource.network.ApiHelperImpl
+import com.example.vodafoneairlinechallenge.data.dataSourceManager.network.APIHelper
+import com.example.vodafoneairlinechallenge.data.dataSourceManager.network.ApiHelperImpl
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

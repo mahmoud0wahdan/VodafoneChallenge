@@ -1,7 +1,7 @@
 package com.example.vodafoneairlinechallenge.data.airlines.local
 
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
-import com.example.vodafoneairlinechallenge.data.dataSource.database.DAO
+import com.example.vodafoneairlinechallenge.data.dataSourceManager.database.DAO
 import javax.inject.Inject
 
 class AirlinesLocalDataSource @Inject constructor(

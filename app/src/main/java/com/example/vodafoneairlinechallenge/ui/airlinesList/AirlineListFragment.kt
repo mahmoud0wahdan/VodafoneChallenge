@@ -1,20 +1,23 @@
-package com.example.vodafoneairlinechallenge.ui
+package com.example.vodafoneairlinechallenge.ui.airlinesList
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.activityViewModels
 import com.example.vodafoneairlinechallenge.R
-import com.example.vodafoneairlinechallenge.ui.placeholder.PlaceholderContent
+import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineListBinding
+import com.example.vodafoneairlinechallenge.ui.airlinesList.placeholder.PlaceholderContent
 
 
 class AirlineListFragment : Fragment() {
 
-
+    private val airlinesListViewModel: AirlinesListViewModel by activityViewModels()
+    private var _binding: FragmentAirlineListBinding? = null
+    private val binding get() = _binding!!
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?

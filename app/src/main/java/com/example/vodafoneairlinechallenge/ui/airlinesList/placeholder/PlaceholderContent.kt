@@ -1,4 +1,4 @@
-package com.example.vodafoneairlinechallenge.ui.placeholder
+package com.example.vodafoneairlinechallenge.ui.airlinesList.placeholder
 
 import java.util.ArrayList
 import java.util.HashMap
