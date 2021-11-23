@@ -1,8 +1,9 @@
-package com.example.vodafoneairlinechallenge
+package com.example.vodafoneairlinechallenge.ui
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
+import com.example.vodafoneairlinechallenge.R
 
 class MainActivity : AppCompatActivity() {
 
