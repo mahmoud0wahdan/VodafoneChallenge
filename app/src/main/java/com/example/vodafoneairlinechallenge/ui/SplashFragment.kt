@@ -34,7 +34,7 @@ class SplashFragment : Fragment() {
                 try {
                     sleep((3 * 1000).toLong())
                     Log.i("splash", "navigate to list")
-
+                    findNavController().navigate(R.id.nav_airlineListFragment)
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }

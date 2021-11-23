@@ -4,7 +4,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.navigation.fragment.NavHostFragment
 import com.example.vodafoneairlinechallenge.R
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private var currentScreenID: Int = 0
@@ -18,6 +20,8 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
         navController.addOnDestinationChangedListener { _, destination, _ ->
             currentScreenID = destination.id
+            if(currentScreenID!=R.id.nav_splashFragment)
+                supportActionBar!!.show()
         }
     }
 

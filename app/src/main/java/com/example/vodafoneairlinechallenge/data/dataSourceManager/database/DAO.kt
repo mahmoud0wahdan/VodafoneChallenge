@@ -11,7 +11,6 @@ interface DAO {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveAirlineList(cites: List<AirlinesResponseItem>)
 
-
     @Query("SELECT * FROM airlines")
     suspend fun getAllAirlines(): List<AirlinesResponseItem>
 

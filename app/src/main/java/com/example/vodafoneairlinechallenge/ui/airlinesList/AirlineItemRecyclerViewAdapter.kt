@@ -3,19 +3,31 @@ package com.example.vodafoneairlinechallenge.ui.airlinesList
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import android.widget.Filter
+import android.widget.Filterable
 import android.widget.TextView
+import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineItemBinding
+import java.util.*
+import kotlin.collections.ArrayList
 
-import com.example.vodafoneairlinechallenge.ui.airlinesList.placeholder.PlaceholderContent.PlaceholderItem
 
-
-/**
- * [RecyclerView.Adapter] that can display a [PlaceholderItem].
- * TODO: Replace the implementation with code for your data type.
- */
 class AirlineItemRecyclerViewAdapter(
-    private val values: List<PlaceholderItem>
-) : RecyclerView.Adapter<AirlineItemRecyclerViewAdapter.ViewHolder>() {
+    private var airlinesList: List<AirlinesResponseItem>?,
+    private val onAirlineRowClickListener: OnAirlineRowClickListener
+) : RecyclerView.Adapter<AirlineItemRecyclerViewAdapter.ViewHolder>(), Filterable {
+
+    private var airlinesFilterList: List<AirlinesResponseItem>? = airlinesList
+
+    fun setAirlinesList(airlinesList: List<AirlinesResponseItem>) {
+        airlinesFilterList = airlinesList
+        this.airlinesList = airlinesList
+        notifyDataSetChanged()
+    }
+
+    interface OnAirlineRowClickListener {
+        fun onItemClick(airlinesResponseItem: AirlinesResponseItem)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -30,21 +42,53 @@ class AirlineItemRecyclerViewAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = values[position]
-        holder.idView.text = item.id
-        holder.contentView.text = item.content
-    }
-
-    override fun getItemCount(): Int = values.size
-
-    inner class ViewHolder(binding: FragmentAirlineItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val idView: TextView = binding.itemNumber
-        val contentView: TextView = binding.content
-
-        override fun toString(): String {
-            return super.toString() + " '" + contentView.text + "'"
+        val item = airlinesFilterList!![position]
+        holder.airlineName.text = item.name
+        holder.itemView.setOnClickListener {
+            onAirlineRowClickListener.onItemClick(item)
         }
     }
 
+    override fun getItemCount(): Int {
+        return if (airlinesFilterList==null) 0 else airlinesFilterList!!.size
+    }
+
+    inner class ViewHolder(binding: FragmentAirlineItemBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        val airlineName: TextView = binding.airlineName
+
+        override fun toString(): String {
+            return super.toString() + " '" + airlineName.text + "'"
+        }
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+            override fun performFiltering(constraint: CharSequence?): FilterResults {
+                val charSearch = constraint.toString()
+                airlinesFilterList = if (charSearch.isEmpty()) {
+                    airlinesList
+                } else {
+                    val resultList = ArrayList<AirlinesResponseItem>()
+                    for (row in airlinesList!!) {
+                        if (row.name.lowercase(Locale.ROOT)
+                                .contains(charSearch.lowercase(Locale.ROOT))
+                        ) {
+                            resultList.add(row)
+                        }
+                    }
+                    resultList
+                }
+                val filterResults = FilterResults()
+                filterResults.values = airlinesFilterList
+                return filterResults
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun publishResults(constraint: CharSequence?, results: FilterResults?) {
+                airlinesFilterList = results?.values as ArrayList<AirlinesResponseItem>
+                notifyDataSetChanged()
+            }
+        }
+    }
 }
