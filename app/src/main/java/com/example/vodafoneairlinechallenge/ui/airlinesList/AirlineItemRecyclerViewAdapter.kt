@@ -1,5 +1,6 @@
 package com.example.vodafoneairlinechallenge.ui.airlinesList
 
+import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -43,14 +44,14 @@ class AirlineItemRecyclerViewAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = airlinesFilterList!![position]
-        holder.airlineName.text = item.name
+        holder.airlineName.text = item.country
         holder.itemView.setOnClickListener {
             onAirlineRowClickListener.onItemClick(item)
         }
     }
 
     override fun getItemCount(): Int {
-        return if (airlinesFilterList==null) 0 else airlinesFilterList!!.size
+        return if (airlinesFilterList == null) 0 else airlinesFilterList!!.size
     }
 
     inner class ViewHolder(binding: FragmentAirlineItemBinding) :
@@ -70,11 +71,16 @@ class AirlineItemRecyclerViewAdapter(
                     airlinesList
                 } else {
                     val resultList = ArrayList<AirlinesResponseItem>()
-                    for (row in airlinesList!!) {
-                        if (row.name.lowercase(Locale.ROOT)
-                                .contains(charSearch.lowercase(Locale.ROOT))
-                        ) {
-                            resultList.add(row)
+                    if (airlinesList != null) {
+                        for (row in airlinesList!!) {
+                            Log.i("debug", "performFiltering: ${row.country}")
+                            if (row.country!=null && row.country.toLowerCase(
+                                    Locale.ROOT
+                                )
+                                    .contains(charSearch.toLowerCase(Locale.ROOT))
+                            ) {
+                                resultList.add(row)
+                            }
                         }
                     }
                     resultList

@@ -18,5 +18,14 @@
         android:id="@+id/nav_airlineListFragment"
         android:name="com.example.vodafoneairlinechallenge.ui.airlinesList.AirlineListFragment"
         android:label="@string/countries"
-        tools:layout="@layout/fragment_airline_list" />
+        tools:layout="@layout/fragment_airline_list" >
+        <action
+            android:id="@+id/action_nav_airlineListFragment_to_airlineDetailsFragment"
+            app:destination="@id/nav_airlineDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_airlineDetailsFragment"
+        android:name="com.example.vodafoneairlinechallenge.ui.airlineDetails.AirlineDetailsFragment"
+        android:label="fragment_airline_details"
+        tools:layout="@layout/fragment_airline_details" />
 </navigation>

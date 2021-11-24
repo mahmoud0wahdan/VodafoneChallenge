@@ -18,7 +18,8 @@ import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
-class AirlineListFragment : Fragment() ,AirlineItemRecyclerViewAdapter.OnAirlineRowClickListener{
+class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirlineRowClickListener,
+    View.OnClickListener {
 
     private val airlinesListViewModel: AirlinesListViewModel by activityViewModels()
     private var _binding: FragmentAirlineListBinding? = null
@@ -29,10 +30,15 @@ class AirlineListFragment : Fragment() ,AirlineItemRecyclerViewAdapter.OnAirline
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        _binding=FragmentAirlineListBinding.inflate(inflater,container,false)
+        _binding = FragmentAirlineListBinding.inflate(inflater, container, false)
         init()
-       initAirlinesRV()
+        initListeners()
+        initAirlinesRV()
         return binding.root
+    }
+
+    private fun initListeners() {
+        binding.searchBtn.setOnClickListener(this)
     }
 
     private fun init() {
@@ -42,9 +48,10 @@ class AirlineListFragment : Fragment() ,AirlineItemRecyclerViewAdapter.OnAirline
     }
 
     private fun initAirlinesRV() {
-        airlineItemRecyclerViewAdapter=AirlineItemRecyclerViewAdapter(null,this@AirlineListFragment)
+        airlineItemRecyclerViewAdapter =
+            AirlineItemRecyclerViewAdapter(null, this@AirlineListFragment)
         binding.list.apply {
-           adapter=airlineItemRecyclerViewAdapter
+            adapter = airlineItemRecyclerViewAdapter
         }
     }
 
@@ -83,6 +90,18 @@ class AirlineListFragment : Fragment() ,AirlineItemRecyclerViewAdapter.OnAirline
     }
 
     override fun onItemClick(airlinesResponseItem: AirlinesResponseItem) {
-        Log.i("debug", airlinesResponseItem.name)
+        val bundle = bundleOf(
+            "airlinesResponseItem" to airlinesResponseItem
+        )
+        findNavController().navigate(
+            R.id.nav_airlineDetailsFragment,
+            bundle
+        )
+    }
+
+    override fun onClick(v: View?) {
+        when (v!!.id) {
+            R.id.search_btn -> airlineItemRecyclerViewAdapter.filter.filter(binding.airlineSearchTextArea.text.toString())
+        }
     }
 }
