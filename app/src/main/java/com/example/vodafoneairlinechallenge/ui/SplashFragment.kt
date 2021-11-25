@@ -40,18 +40,21 @@ class SplashFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-        object : Thread() {
+       val splashTimeThread= object : Thread() {
             override fun run() {
                 try {
                     sleep((3 * 1000).toLong())
-                    Log.i("splash", "navigate to list")
-                    findNavController().navigate(R.id.nav_airlineListFragment)
+                    requireActivity().runOnUiThread {
+                        findNavController().navigate(R.id.nav_airlineListFragment)
+                    }
                 } catch (e: Exception) {
                     e.printStackTrace()
                 }
             }
 
-        }.start()
+        }
+        splashTimeThread.start()
+
     }
 
     override fun onPause() {
