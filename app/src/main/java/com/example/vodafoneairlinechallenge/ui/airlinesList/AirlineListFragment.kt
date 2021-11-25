@@ -177,7 +177,21 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
             R.id.search_btn -> airlineItemRecyclerViewAdapter.filter.filter(binding.airlineSearchTextArea.text.toString())
             R.id.airline_creation_fab_btn -> showBottomSheetDialog()
             R.id.airline_established_year_et -> showDatePicker()
-            R.id.airline_confirm_creation -> airlinesListViewModel.createNewAirLineRecord(
+            R.id.airline_confirm_creation -> onActionConfirmCreateAirline()
+            R.id.airline_cancel_creation -> bottomSheetDialog.dismiss()
+        }
+    }
+
+    private fun onActionConfirmCreateAirline() {
+        if (airlinesListViewModel.validateAirLineData(
+                airlineCountryEt.text.toString(),
+                airlineEstablishedYearEt.text.toString(),
+                airlineHeadquartersEt.text.toString(),
+                airlineNameEt.text.toString(),
+                airlineSloganEt.text.toString()
+            )
+        )
+            airlinesListViewModel.createNewAirLineRecord(
                 AirLineCreationRequest(
                     country = airlineCountryEt.text.toString(),
                     established = airlineEstablishedYearEt.text.toString(),
@@ -189,8 +203,12 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
                     website = null
                 )
             )
-            R.id.airline_cancel_creation -> bottomSheetDialog.dismiss()
-        }
+        else
+            Toast.makeText(
+                requireContext(),
+                requireContext().resources.getString(R.string.fill_all_required_data),
+                Toast.LENGTH_SHORT
+            ).show()
     }
 
     private fun showDatePicker() {

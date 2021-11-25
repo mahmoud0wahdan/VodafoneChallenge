@@ -1,5 +1,6 @@
 package com.example.vodafoneairlinechallenge.ui.airlinesList
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -10,6 +11,7 @@ import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.Ai
 import com.example.vodafoneairlinechallenge.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import java.net.SocketException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -32,8 +34,16 @@ class AirlinesListViewModel @Inject constructor(
         try {
             getAllAirLines()
         } catch (exception: Exception) {
-            _AirLinesRes.postValue(Resource.success(getAirLinesListFromDB()))
+            when (exception) {
+                is SocketException -> _AirLinesRes.postValue(Resource.success(getAirLinesListFromDB()))
+                else -> _AirLinesRes.postValue(Resource.error(exception.message!!, null))
+            }
+
         }
+    }
+
+    fun getAirLinesLiveDataObject(): LiveData<Resource<List<AirlinesResponseItem>>?> {
+        return _AirLinesRes
     }
 
     private suspend fun getAirLinesListFromDB(): List<AirlinesResponseItem> {
@@ -71,5 +81,16 @@ class AirlinesListViewModel @Inject constructor(
                 _AirLineCreationRes.postValue(Resource.error(it.message(), null))
             }
         }
+    }
+
+
+    fun validateAirLineData(
+        country: String,
+        airlineEstablishedYear: String,
+        airlineHeadquarters: String,
+        airlineName: String,
+        airlineSlogan: String
+    ): Boolean {
+        return country.isNotEmpty() && airlineEstablishedYear.isNotEmpty() && airlineHeadquarters.isNotEmpty() && airlineName.isNotEmpty() && airlineSlogan.isNotEmpty()
     }
 }

@@ -15,4 +15,5 @@
     <string name="confirm">Confirm</string>
     <string name="cancel">Cancel</string>
     <string name="airline_added_successfully">Air Line Added Successfully</string>
+    <string name="fill_all_required_data">Fill All Required Data</string>
 </resources>
