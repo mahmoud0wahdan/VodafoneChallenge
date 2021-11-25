@@ -10,10 +10,9 @@ import javax.inject.Inject
 class ApiHelperImpl @Inject constructor(
     private val apiService: VodafoneAirlineAPI
 ) : APIHelper {
-    override suspend fun getAirlineList(): Response<List<AirlinesResponseItem>> {
-        val x=0
-       return apiService.getAirlineList()
-    }
+    override suspend fun getAirlineList(): Response<List<AirlinesResponseItem>> =
+       apiService.getAirlineList()
+
     override suspend fun createAirlineNewRecord( airLineCreationRequest: AirLineCreationRequest): Response<AirLineCreationResponse> =
         apiService.createAirlineNewRecord(airLineCreationRequest)
 }

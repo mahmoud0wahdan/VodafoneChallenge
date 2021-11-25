@@ -12,6 +12,7 @@ import com.example.vodafoneairlinechallenge.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import java.net.SocketException
+import java.net.UnknownHostException
 import javax.inject.Inject
 
 @HiltViewModel
@@ -35,7 +36,9 @@ class AirlinesListViewModel @Inject constructor(
             getAllAirLines()
         } catch (exception: Exception) {
             when (exception) {
-                is SocketException -> _AirLinesRes.postValue(Resource.success(getAirLinesListFromDB()))
+                is SocketException   ->  _AirLinesRes.postValue(Resource.success(getAirLinesListFromDB()))
+                is UnknownHostException ->
+                    _AirLinesRes.postValue(Resource.success(getAirLinesListFromDB()))
                 else -> _AirLinesRes.postValue(Resource.error(exception.message!!, null))
             }
 

@@ -10,11 +10,16 @@ import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.Ai
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineDetailsBinding
 import android.content.Intent
 import android.net.Uri
+import android.webkit.URLUtil
 import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
+import android.content.ActivityNotFoundException
+
+
+
 
 
 class AirlineDetailsFragment : Fragment(), View.OnClickListener {
@@ -67,23 +72,23 @@ class AirlineDetailsFragment : Fragment(), View.OnClickListener {
 
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.airline_visit_website ->
-                openUrlWebPage(airlinesResponseItem.website!!)
+            R.id.airline_visit_website ->openWebPageChrome(airlinesResponseItem.website!!)
+           //     openUrlWebPage(airlinesResponseItem.website!!)
             R.id.back_btn -> findNavController().popBackStack()
         }
     }
 
-    private fun openUrlWebPage(website: String) {
-        val browserIntent =
-            Intent(Intent.ACTION_VIEW, Uri.parse(website))
-        if (browserIntent.resolveActivity(requireActivity().packageManager) != null) {
-            startActivity(browserIntent);
-        } else {
-            Toast.makeText(
-                requireContext(),
-                requireContext().resources.getString(R.string.no_web_view_detected),
-                Toast.LENGTH_SHORT
-            ).show()
-        }
+
+   private fun openWebPageChrome(url: String) {
+       val intent = Intent(Intent.ACTION_VIEW, Uri.parse(URLUtil.guessUrl(url)))
+       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+       intent.setPackage("com.android.chrome")
+       try {
+          requireContext().startActivity(intent)
+       } catch (ex: ActivityNotFoundException) {
+           // Chrome browser presumably not installed so allow user to choose instead
+           intent.setPackage(null)
+           requireContext().startActivity(intent)
+       }
     }
 }
