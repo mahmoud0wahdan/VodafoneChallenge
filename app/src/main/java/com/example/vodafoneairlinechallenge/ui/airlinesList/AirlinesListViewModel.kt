@@ -45,9 +45,6 @@ class AirlinesListViewModel @Inject constructor(
         }
     }
 
-    fun getAirLinesLiveDataObject(): LiveData<Resource<List<AirlinesResponseItem>>?> {
-        return _AirLinesRes
-    }
 
     private suspend fun getAirLinesListFromDB(): List<AirlinesResponseItem> {
         return airlinesRepoInterface.getAirLinesListFromDB()
