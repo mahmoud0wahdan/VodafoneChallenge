@@ -1,5 +1,7 @@
 package com.example.vodafoneairlinechallenge.data.airlines
 
+import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.request.AirLineCreationRequest
+import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.response.AirLineCreationResponse
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
 import com.example.vodafoneairlinechallenge.data.airlines.local.AirlinesLocalDataSourceInterface
 import com.example.vodafoneairlinechallenge.data.airlines.remote.AirlinesRemoteDataSourceInterface
@@ -18,5 +20,8 @@ class AirlinesRepo @Inject constructor(
 
     override suspend fun saveAirLinesList(airLines: List<AirlinesResponseItem>) =
         airlinesLocalDataSourceInterface.saveAirlinesList(airLines)
+
+    override suspend fun createAirlineNewRecord(airLineCreationRequest: AirLineCreationRequest): Response<AirLineCreationResponse> =
+        airlinesRemoteDataSourceInterface.createAirlineNewRecord(airLineCreationRequest)
 
 }

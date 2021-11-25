@@ -1,14 +1,19 @@
 package com.example.vodafoneairlinechallenge.ui
 
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import androidx.navigation.fragment.findNavController
 import com.example.vodafoneairlinechallenge.R
+
+import androidx.appcompat.app.AppCompatActivity
+
+
+
 
 
 class SplashFragment : Fragment() {
@@ -27,8 +32,14 @@ class SplashFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_splash, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        (activity as AppCompatActivity?)!!.supportActionBar!!.hide()
+    }
+
     override fun onResume() {
         super.onResume()
+        requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
         object : Thread() {
             override fun run() {
                 try {
@@ -43,4 +54,8 @@ class SplashFragment : Fragment() {
         }.start()
     }
 
+    override fun onPause() {
+        super.onPause()
+        requireActivity().window.clearFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
+    }
 }

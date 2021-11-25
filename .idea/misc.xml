@@ -3,7 +3,13 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/drawable/bg_bottom_sheet_dialog_fragment.xml" value="0.1703125" />
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/drawable/edittext_border.xml" value="0.1765625" />
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/drawable/roundcorner.xml" value="0.1765625" />
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/abs_layout.xml" value="0.16041666666666668" />
         <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/activity_main.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/airline_creation_bottom_sheet.xml" value="0.33" />
+        <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/airline_creation_fragment.xml" value="0.1765625" />
         <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/fragment_airline_details.xml" value="0.1816123188405797" />
         <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/fragment_airline_item.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/NTG/AndroidStudioProjects/VodafoneAirlineChallenge/app/src/main/res/layout/fragment_airline_list.xml" value="0.21" />

@@ -74,10 +74,10 @@ class AirlineItemRecyclerViewAdapter(
                     if (airlinesList != null) {
                         for (row in airlinesList!!) {
                             Log.i("debug", "performFiltering: ${row.country}")
-                            if (row.country!=null && row.country.toLowerCase(
+                            if (row.country!=null && row.country.lowercase(
                                     Locale.ROOT
                                 )
-                                    .contains(charSearch.toLowerCase(Locale.ROOT))
+                                    .contains(charSearch.lowercase(Locale.ROOT))
                             ) {
                                 resultList.add(row)
                             }

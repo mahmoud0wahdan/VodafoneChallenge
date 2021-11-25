@@ -10,7 +10,11 @@ import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.Ai
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineDetailsBinding
 import android.content.Intent
 import android.net.Uri
+import android.widget.ImageButton
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatTextView
+import androidx.navigation.fragment.findNavController
 
 
 class AirlineDetailsFragment : Fragment(), View.OnClickListener {
@@ -31,6 +35,25 @@ class AirlineDetailsFragment : Fragment(), View.OnClickListener {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        initAppbar()
+    }
+
+    private fun initAppbar() {
+        (activity as AppCompatActivity?)!!.supportActionBar!!.apply {
+            show()
+            customView.apply {
+                findViewById<AppCompatTextView>(R.id.appbar_title).text =
+                    requireContext().resources.getString(R.string.countries)
+                findViewById<ImageButton>(R.id.back_btn).apply {
+                    visibility = View.VISIBLE
+                    setOnClickListener(this@AirlineDetailsFragment)
+                }
+            }
+        }
+    }
+
     private fun initListener() {
         binding.airlineVisitWebsite.setOnClickListener(this)
     }
@@ -45,7 +68,8 @@ class AirlineDetailsFragment : Fragment(), View.OnClickListener {
     override fun onClick(v: View?) {
         when (v!!.id) {
             R.id.airline_visit_website ->
-                openUrlWebPage(airlinesResponseItem.website)
+                openUrlWebPage(airlinesResponseItem.website!!)
+            R.id.back_btn -> findNavController().popBackStack()
         }
     }
 

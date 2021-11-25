@@ -8,15 +8,16 @@ import kotlinx.parcelize.Parcelize
 @Entity(tableName = "airlines")
 @Parcelize
 data class AirlinesResponseItem(
-    val country: String,
-    val createdDate: String,
-    val established: String,
-    val head_quaters: String,
+    val country: String?,
+
+    val createdDate: String?,
+    val established: String?,
+    val head_quaters: String?,
 
     @PrimaryKey
     val id: Double,
-    val logo: String,
-    val name: String,
-    val slogan: String,
-    val website: String
+    val logo: String?,
+    val name: String?,
+    val slogan: String?,
+    val website: String?
 ):Parcelable

@@ -5,4 +5,11 @@
     <dimen name="airline_details_card_vertical_margin">16dp</dimen>
     <dimen name="button_radius">10dp</dimen>
     <dimen name="card_corner_radius">10dp</dimen>
+    <dimen name="text_input_corner">10dp</dimen>
+    <dimen name="visit_airline_details_vertical_padding">15dp</dimen>
+    <dimen name="fab_margin">25dp</dimen>
+    <dimen name="bottom_sheet_corner_radius">30dp</dimen>
+    <dimen name="bottom_sheet_top_padding">8dp</dimen>
+    <dimen name="cardview_custom_elevation">5dp</dimen>
+    <dimen name="margin_between_airline_items">8dp</dimen>
 </resources>

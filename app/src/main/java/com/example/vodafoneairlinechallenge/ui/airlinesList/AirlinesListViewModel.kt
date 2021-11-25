@@ -4,6 +4,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.vodafoneairlinechallenge.data.airlines.AirlinesRepoInterface
+import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.request.AirLineCreationRequest
+import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.response.AirLineCreationResponse
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
 import com.example.vodafoneairlinechallenge.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,6 +22,11 @@ class AirlinesListViewModel @Inject constructor(
 
     val airLinesListResponse: MutableLiveData<Resource<List<AirlinesResponseItem>>?>
         get() = _AirLinesRes
+
+    private val _AirLineCreationRes = MutableLiveData<Resource<AirLineCreationResponse>?>()
+
+    val airLineCreationResponse: MutableLiveData<Resource<AirLineCreationResponse>?>
+        get() = _AirLineCreationRes
 
     fun getAirLinesList() = viewModelScope.launch {
         try {
@@ -38,8 +45,30 @@ class AirlinesListViewModel @Inject constructor(
         airlinesRepoInterface.getAirLinesListFromAPI().let {
             if (it.isSuccessful) {
                 _AirLinesRes.postValue(Resource.success(it.body()))
+                airlinesRepoInterface.saveAirLinesList(it.body()!!)
             } else {
                 _AirLinesRes.postValue(Resource.error(it.message(), null))
+            }
+        }
+    }
+
+    fun createNewAirLineRecord(airlinesResponseItem: AirLineCreationRequest) =
+        viewModelScope.launch {
+            try {
+                callCreateNewAirLineRecordAPI(airlinesResponseItem)
+            } catch (exception: Exception) {
+                _AirLineCreationRes.postValue(Resource.error(exception.message.toString(), null))
+            }
+        }
+
+    private suspend fun callCreateNewAirLineRecordAPI(airlinesResponseItem: AirLineCreationRequest) {
+        _AirLineCreationRes.postValue(Resource.loading(null))
+        airlinesRepoInterface.createAirlineNewRecord(airlinesResponseItem).let {
+            if (it.isSuccessful) {
+                _AirLineCreationRes.postValue(Resource.success(it.body()))
+
+            } else {
+                _AirLineCreationRes.postValue(Resource.error(it.message(), null))
             }
         }
     }
