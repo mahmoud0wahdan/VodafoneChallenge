@@ -1,41 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/text_margin"
-    android:layout_marginVertical="@dimen/margin_between_airline_items"
-    android:background="@color/white"
-    app:cardElevation="@dimen/cardview_custom_elevation"
-    app:cardCornerRadius="@dimen/card_corner_radius"
-    >
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <data>
+
+        <variable
+            name="airlinesViewModel"
+            type="com.example.vodafoneairlinechallenge.ui.airlinesList.AirlinesListViewModel" />
+
+        <variable
+            name="airlineDetails"
+            type="com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem" />
+    </data>
+
+    <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/text_margin"
+        android:layout_marginVertical="@dimen/margin_between_airline_items"
+        android:background="@color/white"
+        android:onClick="@{()->airlinesViewModel.onAirlineItemClicked(airlineDetails)}"
+        app:cardCornerRadius="@dimen/card_corner_radius"
+        app:cardElevation="@dimen/cardview_custom_elevation">
 
-        <TextView
-            android:id="@+id/airline_name"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/text_margin"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@id/navigate_to_airline_details_image"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/navigate_to_airline_details_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:padding="@dimen/icon_padding"
-            android:src="@drawable/ic_arrow"
-            android:textAppearance="?attr/textAppearanceListItem"
-            app:layout_constraintBottom_toBottomOf="@id/airline_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/airline_name"
-            app:layout_constraintTop_toTopOf="@id/airline_name" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-</androidx.cardview.widget.CardView>
+            <TextView
+                android:id="@+id/airline_name"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_margin"
+                android:text="@{airlineDetails.country}"
+                android:textAppearance="?attr/textAppearanceListItem"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@id/navigate_to_airline_details_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/navigate_to_airline_details_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:padding="@dimen/icon_padding"
+                android:src="@drawable/ic_arrow"
+                android:textAppearance="?attr/textAppearanceListItem"
+                app:layout_constraintBottom_toBottomOf="@id/airline_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@id/airline_name"
+                app:layout_constraintTop_toTopOf="@id/airline_name" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</layout>

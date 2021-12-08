@@ -1,19 +1,16 @@
 package com.example.vodafoneairlinechallenge.ui
 
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.vodafoneairlinechallenge.R
-
-import androidx.appcompat.app.AppCompatActivity
-
-
-
+import kotlinx.coroutines.delay
 
 
 class SplashFragment : Fragment() {
@@ -40,7 +37,11 @@ class SplashFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         requireActivity().window.addFlags(WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS);
-       val splashTimeThread= object : Thread() {
+        /*lifecycleScope.launchWhenStarted {
+            delay(3000)
+            findNavController().navigate(R.id.nav_airlineListFragment)
+        }*/
+        val splashTimeThread = object : Thread() {
             override fun run() {
                 try {
                     sleep((3 * 1000).toLong())

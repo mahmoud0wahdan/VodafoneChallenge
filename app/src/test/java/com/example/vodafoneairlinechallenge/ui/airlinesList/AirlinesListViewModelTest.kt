@@ -3,7 +3,6 @@ package com.example.vodafoneairlinechallenge.ui.airlinesList
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.lifecycle.Observer
-import com.example.vodafoneairlinechallenge.data.airlines.AirlinesRepo
 import com.example.vodafoneairlinechallenge.data.airlines.AirlinesRepoInterface
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.request.AirLineCreationRequest
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.response.AirLineCreationResponse
@@ -11,6 +10,7 @@ import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.Ai
 import com.example.vodafoneairlinechallenge.utils.Resource
 import com.example.vodafoneairlinechallenge.utils.TestCoroutineRule
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import junit.framework.Assert.assertEquals
 import junit.framework.Assert.assertNotNull
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -25,9 +25,7 @@ import org.junit.runner.RunWith
 import org.mockito.Mock
 import org.mockito.Mockito.*
 import org.mockito.junit.MockitoJUnitRunner
-import retrofit2.HttpException
 import retrofit2.Response
-import java.lang.Thread.sleep
 import org.mockito.Mockito.`when` as whenever
 
 @ExperimentalCoroutinesApi
@@ -63,7 +61,7 @@ class AirlinesListViewModelTest {
             whenever(airlinesRepo.getAirLinesListFromAPI()).thenAnswer {
                 Response.success(emptyList)
             }
-            viewModel.getAirLinesList()
+            viewModel.getAirLinesList1()
             assertNotNull(viewModel.airLinesListResponse.value)
             assertEquals(Resource.success(emptyList), viewModel.airLinesListResponse.value)
         }
@@ -74,7 +72,7 @@ class AirlinesListViewModelTest {
     fun `when calling for  results then return loading`() {
         testCoroutineRule.runBlockingTest {
             viewModel.airLinesListResponse.observeForever(airlinesResponseObserver)
-            viewModel.getAirLinesList()
+            viewModel.getAirLinesList1()
             verify(airlinesResponseObserver).onChanged(Resource.loading(null))
         }
     }
@@ -83,7 +81,7 @@ class AirlinesListViewModelTest {
     fun `when calling for airline list results then return loading`() {
         testCoroutineRule.runBlockingTest {
             viewModel.airLinesListResponse.observeForever(airlinesResponseObserver)
-            viewModel.getAirLinesList()
+            viewModel.getAirLinesList1()
             verify(airlinesResponseObserver).onChanged(Resource.loading(null))
         }
     }
@@ -173,7 +171,7 @@ class AirlinesListViewModelTest {
 //            whenever(airlinesRepo.getAirLinesListFromAPI()).thenAnswer {
 //                Response.error(200,null)
 //            }
-//            viewModel.getAirLinesList()
+//            viewModel.getAirLinesList1()
 //            assertNotNull(viewModel.airLinesListResponse.value)
 //            assertEquals(
 //                Resource.error(exception.message!!, null),

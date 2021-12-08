@@ -1,166 +1,180 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-<TextView
-    android:id="@+id/title_add_new_airline_label"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_margin="@dimen/text_margin"
-    android:text="@string/add_new_air_line"
-    android:textAppearance="?android:textAppearanceLarge"
-    app:layout_constraintStart_toStartOf="parent"
-    app:layout_constraintEnd_toEndOf="parent"
-    app:layout_constraintTop_toTopOf="parent"
-    />
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/airline_name_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+
+    <data>
+
+        <variable
+            name="view"
+            type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.example.vodafoneairlinechallenge.ui.airlinesList.AirlinesListViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_line_name"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/title_add_new_airline_label"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
-        app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusTopStart="@dimen/text_input_corner"
-        >
+        android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/airline_name_et"
-            android:layout_width="match_parent"
-
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/airline_slogan_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_line_slogan"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/airline_name_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
-        app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusTopStart="@dimen/text_input_corner"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/airline_slogan_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/airline_country_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_line_country"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/airline_slogan_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
-        app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusTopStart="@dimen/text_input_corner"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/airline_country_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/airline_headquarters_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_line_headquarters"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/airline_country_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
-        app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusTopStart="@dimen/text_input_corner"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/airline_headquarters_et"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
-
-    </com.google.android.material.textfield.TextInputLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/airline_established_year_layout"
-        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="@string/air_line_established_year"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/airline_headquarters_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
-        app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
-        app:boxCornerRadiusTopStart="@dimen/text_input_corner"
-        >
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/airline_established_year_et"
+        <TextView
+            android:id="@+id/title_add_new_airline_label"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:clickable="false"
-            android:cursorVisible="false"
-            android:focusable="false"
-            android:focusableInTouchMode="false"
-            />
+            android:layout_margin="@dimen/text_margin"
+            android:text="@string/add_new_air_line"
+            android:textAppearance="?android:textAppearanceLarge"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/airline_name_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:hint="@string/air_line_name"
+            app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
+            app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusTopStart="@dimen/text_input_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title_add_new_airline_label">
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/airline_confirm_creation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/vodafone_red"
-        android:text="@string/confirm"
-        android:textAllCaps="false"
-        app:cornerRadius="@dimen/button_radius"
-        android:layout_margin="@dimen/text_margin"
-        app:layout_constraintTop_toBottomOf="@id/airline_established_year_layout"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/airline_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{(editable) -> viewModel.setAirlineName(editable)}" />
 
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/airline_cancel_creation"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="@dimen/text_margin"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="@color/vodafone_red"
-        android:text="@string/cancel"
-        android:textAllCaps="false"
-        app:cornerRadius="@dimen/button_radius"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/airline_confirm_creation" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/airline_slogan_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:hint="@string/air_line_slogan"
+            app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
+            app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusTopStart="@dimen/text_input_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_name_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/airline_slogan_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{(editable) -> viewModel.setAirlineSlogan(editable)}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/airline_country_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:hint="@string/air_line_country"
+            app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
+            app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusTopStart="@dimen/text_input_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_slogan_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/airline_country_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{(editable) -> viewModel.setAirlineCountry(editable)}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/airline_headquarters_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:hint="@string/air_line_headquarters"
+            app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
+            app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusTopStart="@dimen/text_input_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_country_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/airline_headquarters_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:afterTextChanged="@{(editable) -> viewModel.setAirlineHeadquarters(editable)}" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/airline_established_year_layout"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:hint="@string/air_line_established_year"
+            android:onClick="@{(view)-> viewModel.openDatePicker(view)}"
+            app:boxCornerRadiusBottomEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusBottomStart="@dimen/text_input_corner"
+            app:boxCornerRadiusTopEnd="@dimen/text_input_corner"
+            app:boxCornerRadiusTopStart="@dimen/text_input_corner"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_headquarters_layout">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/airline_established_year_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/airline_confirm_creation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:backgroundTint="@color/vodafone_red"
+            android:onClick="@{()-> viewModel.onConfirmCreateAirlineClicked()}"
+            android:text="@string/confirm"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/button_radius"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_established_year_layout" />
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/airline_cancel_creation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_margin"
+            android:layout_marginBottom="16dp"
+            android:backgroundTint="@color/vodafone_red"
+            android:onClick="@{()->viewModel.onCancelCreateAirlineClicked()}"
+            android:text="@string/cancel"
+            android:textAllCaps="false"
+            app:cornerRadius="@dimen/button_radius"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/airline_confirm_creation" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

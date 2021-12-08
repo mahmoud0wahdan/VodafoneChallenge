@@ -17,31 +17,29 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
 import androidx.navigation.fragment.findNavController
 import android.content.ActivityNotFoundException
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.fragment.navArgs
 
 
-
-
-
-class AirlineDetailsFragment : Fragment(), View.OnClickListener {
-
-
+class AirlineDetailsFragment : Fragment() {
     private var _binding: FragmentAirlineDetailsBinding? = null
-    private val binding get() = _binding!!
     private lateinit var airlinesResponseItem: AirlinesResponseItem
+    private val args by navArgs<AirlineDetailsFragmentArgs>()
+    private val airlineDetailsViewModel: AirlineDetailsViewModel by activityViewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAirlineDetailsBinding.inflate(inflater, container, false)
-        airlinesResponseItem = requireArguments().getParcelable("airlinesResponseItem")!!
-        initCardDetails()
-        initListener()
-        return binding.root
+        return _binding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        airlinesResponseItem = args.airlineDetails
+        _binding!!.airLineDetailsObject = airlinesResponseItem
+        _binding!!.airlineDetailsViewModel = airlineDetailsViewModel
         initAppbar()
     }
 
@@ -53,42 +51,11 @@ class AirlineDetailsFragment : Fragment(), View.OnClickListener {
                     requireContext().resources.getString(R.string.countries)
                 findViewById<ImageButton>(R.id.back_btn).apply {
                     visibility = View.VISIBLE
-                    setOnClickListener(this@AirlineDetailsFragment)
+                    setOnClickListener {
+                        findNavController().popBackStack()
+                    }
                 }
             }
         }
-    }
-
-    private fun initListener() {
-        binding.airlineVisitWebsite.setOnClickListener(this)
-    }
-
-    private fun initCardDetails() {
-        binding.airlineName.text = airlinesResponseItem.name
-        binding.airlineCountry.text = airlinesResponseItem.country
-        binding.airlineSlogan.text = airlinesResponseItem.slogan
-        binding.airlineHeadquarter.text = airlinesResponseItem.head_quaters
-    }
-
-    override fun onClick(v: View?) {
-        when (v!!.id) {
-            R.id.airline_visit_website ->openWebPageChrome(airlinesResponseItem.website!!)
-           //     openUrlWebPage(airlinesResponseItem.website!!)
-            R.id.back_btn -> findNavController().popBackStack()
-        }
-    }
-
-
-   private fun openWebPageChrome(url: String) {
-       val intent = Intent(Intent.ACTION_VIEW, Uri.parse(URLUtil.guessUrl(url)))
-       intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-       intent.setPackage("com.android.chrome")
-       try {
-          requireContext().startActivity(intent)
-       } catch (ex: ActivityNotFoundException) {
-           // Chrome browser presumably not installed so allow user to choose instead
-           intent.setPackage(null)
-           requireContext().startActivity(intent)
-       }
     }
 }

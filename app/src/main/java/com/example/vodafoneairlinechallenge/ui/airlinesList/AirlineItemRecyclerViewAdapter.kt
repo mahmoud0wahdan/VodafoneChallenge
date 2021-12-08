@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import android.widget.TextView
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineItemBinding
 import java.util.*
@@ -15,8 +14,8 @@ import kotlin.collections.ArrayList
 
 class AirlineItemRecyclerViewAdapter(
     private var airlinesList: List<AirlinesResponseItem>?,
-    private val onAirlineRowClickListener: OnAirlineRowClickListener
-) : RecyclerView.Adapter<AirlineItemRecyclerViewAdapter.ViewHolder>(), Filterable {
+    private val airlinesListViewModel: AirlinesListViewModel
+) : RecyclerView.Adapter<AirlineItemViewHolder>(), Filterable {
 
     private var airlinesFilterList: List<AirlinesResponseItem>? = airlinesList
 
@@ -26,42 +25,30 @@ class AirlineItemRecyclerViewAdapter(
         notifyDataSetChanged()
     }
 
-    interface OnAirlineRowClickListener {
-        fun onItemClick(airlinesResponseItem: AirlinesResponseItem)
-    }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): AirlineItemViewHolder {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-
-        return ViewHolder(
+        return AirlineItemViewHolder(
             FragmentAirlineItemBinding.inflate(
                 LayoutInflater.from(parent.context),
                 parent,
                 false
-            )
+            ), airlinesListViewModel
         )
 
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val item = airlinesFilterList!![position]
-        holder.airlineName.text = item.country
-        holder.itemView.setOnClickListener {
-            onAirlineRowClickListener.onItemClick(item)
-        }
+    override fun onBindViewHolder(holder: AirlineItemViewHolder, position: Int) {
+        holder.bind(airlinesFilterList!![position])
+//        val item = airlinesFilterList!![position]
+//        holder.itemView.setOnClickListener {
+//            onAirlineRowClickListener.onItemClick(item)
+//        }
     }
 
     override fun getItemCount(): Int {
         return if (airlinesFilterList == null) 0 else airlinesFilterList!!.size
     }
 
-    inner class ViewHolder(binding: FragmentAirlineItemBinding) :
-        RecyclerView.ViewHolder(binding.root) {
-        val airlineName: TextView = binding.airlineName
-
-        override fun toString(): String {
-            return super.toString() + " '" + airlineName.text + "'"
-        }
-    }
 
     override fun getFilter(): Filter {
         return object : Filter() {
@@ -74,7 +61,7 @@ class AirlineItemRecyclerViewAdapter(
                     if (airlinesList != null) {
                         for (row in airlinesList!!) {
                             Log.i("debug", "performFiltering: ${row.country}")
-                            if (row.country!=null && row.country.lowercase(
+                            if (row.country != null && row.country.lowercase(
                                     Locale.ROOT
                                 )
                                     .contains(charSearch.lowercase(Locale.ROOT))

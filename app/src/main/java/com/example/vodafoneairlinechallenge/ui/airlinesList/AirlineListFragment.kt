@@ -11,14 +11,14 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatTextView
-import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.fragment.findNavController
 import com.example.vodafoneairlinechallenge.R
 import com.example.vodafoneairlinechallenge.data.airlines.dataSource.airlineCreation.request.AirLineCreationRequest
-import com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem
+import com.example.vodafoneairlinechallenge.databinding.AirlineCreationBottomSheetBinding
 import com.example.vodafoneairlinechallenge.databinding.FragmentAirlineListBinding
+import com.example.vodafoneairlinechallenge.utils.EventObserver
 import com.example.vodafoneairlinechallenge.utils.ViewStatus
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.button.MaterialButton
@@ -28,12 +28,13 @@ import java.util.*
 
 
 @AndroidEntryPoint
-class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirlineRowClickListener,
+class AirlineListFragment : Fragment(),
     View.OnClickListener {
 
     private val airlinesListViewModel: AirlinesListViewModel by activityViewModels()
     private var _binding: FragmentAirlineListBinding? = null
     private val binding get() = _binding!!
+    private var bottomSheetBinding: AirlineCreationBottomSheetBinding? = null
     private lateinit var airlineItemRecyclerViewAdapter: AirlineItemRecyclerViewAdapter
     private lateinit var airlineNameEt: EditText
     private lateinit var airlineCountryEt: EditText
@@ -47,6 +48,7 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAirlineListBinding.inflate(inflater, container, false)
+
         init()
         initListeners()
         initAirlinesRV()
@@ -55,6 +57,9 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.viewModel = airlinesListViewModel
+        binding.lifecycleOwner = requireActivity()
+        binding.airlineItemRecyclerViewAdapter = airlineItemRecyclerViewAdapter
         initAppbar()
     }
 
@@ -70,20 +75,32 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
     }
 
     private fun initListeners() {
-        binding.searchBtn.setOnClickListener(this)
         binding.airlineCreationFabBtn.setOnClickListener(this)
     }
 
     private fun init() {
         initAirlinesRV()
         addAirlinesObserver()
+        addAirlineItemClickedObserver()
         addAirlineCreationObserver()
-        airlinesListViewModel.getAirLinesList()
+        airlinesListViewModel.getAirLinesList1()
+    }
+
+    private fun addAirlineItemClickedObserver() {
+        airlinesListViewModel.airlineItem.observe(viewLifecycleOwner, EventObserver {
+            val action =
+                AirlineListFragmentDirections.actionNavAirlineListFragmentToAirlineDetailsFragment(
+                    it
+                )
+            findNavController().navigate(
+                action
+            )
+        })
     }
 
     private fun initAirlinesRV() {
         airlineItemRecyclerViewAdapter =
-            AirlineItemRecyclerViewAdapter(null, this@AirlineListFragment)
+            AirlineItemRecyclerViewAdapter(null, airlinesListViewModel)
         binding.list.apply {
             adapter = airlineItemRecyclerViewAdapter
         }
@@ -148,13 +165,10 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
 
                     ViewStatus.ERROR -> {
                         binding.searchProgressBar.visibility = View.GONE
+                        bottomSheetDialog.dismiss()
                         resource.message?.let {
-                            Snackbar.make(
-                                requireView(),
-                                it,
-                                Snackbar.LENGTH_SHORT
-                            )
-                                .show()
+                            if (it != requireContext().resources.getString(R.string.cancel_create_airline))
+                                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
@@ -162,19 +176,8 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
         })
     }
 
-    override fun onItemClick(airlinesResponseItem: AirlinesResponseItem) {
-        val bundle = bundleOf(
-            "airlinesResponseItem" to airlinesResponseItem
-        )
-        findNavController().navigate(
-            R.id.nav_airlineDetailsFragment,
-            bundle
-        )
-    }
-
     override fun onClick(v: View?) {
         when (v!!.id) {
-            R.id.search_btn -> airlineItemRecyclerViewAdapter.filter.filter(binding.airlineSearchTextArea.text.toString())
             R.id.airline_creation_fab_btn -> showBottomSheetDialog()
             R.id.airline_established_year_et -> showDatePicker()
             R.id.airline_confirm_creation -> onActionConfirmCreateAirline()
@@ -227,8 +230,15 @@ class AirlineListFragment : Fragment(), AirlineItemRecyclerViewAdapter.OnAirline
 
     private fun showBottomSheetDialog() {
         bottomSheetDialog = BottomSheetDialog(requireContext(), R.style.BottomSheetDialogTheme)
-        bottomSheetDialog.setContentView(R.layout.airline_creation_bottom_sheet)
-        initAirlineRowCreationBottomSheet()
+        bottomSheetBinding = AirlineCreationBottomSheetBinding.inflate(
+            layoutInflater,
+            null,
+            false
+        )
+        bottomSheetDialog.setContentView(bottomSheetBinding!!.root)
+        bottomSheetBinding!!.viewModel = airlinesListViewModel
+        bottomSheetBinding!!.view = bottomSheetBinding!!.root
+        //   initAirlineRowCreationBottomSheet()
         bottomSheetDialog.show()
     }
 

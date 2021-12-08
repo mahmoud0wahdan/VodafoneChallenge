@@ -12,6 +12,8 @@
         tools:layout="@layout/fragment_splash" >
         <action
             android:id="@+id/action_nav_splashFragment_to_airlineListFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@+id/nav_graph"
             app:destination="@id/nav_airlineListFragment" />
     </fragment>
     <fragment
@@ -21,11 +23,17 @@
         tools:layout="@layout/fragment_airline_list" >
         <action
             android:id="@+id/action_nav_airlineListFragment_to_airlineDetailsFragment"
+            app:popUpTo="@+id/nav_airlineListFragment"
             app:destination="@id/nav_airlineDetailsFragment" />
+
     </fragment>
     <fragment
         android:id="@+id/nav_airlineDetailsFragment"
         android:name="com.example.vodafoneairlinechallenge.ui.airlineDetails.AirlineDetailsFragment"
         android:label="fragment_airline_details"
-        tools:layout="@layout/fragment_airline_details" />
+        tools:layout="@layout/fragment_airline_details" >
+        <argument
+            android:name="airlineDetails"
+            app:argType="com.example.vodafoneairlinechallenge.data.airlines.dataSource.response.AirlinesResponseItem" />
+    </fragment>
 </navigation>

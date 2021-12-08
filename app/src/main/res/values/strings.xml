@@ -16,4 +16,5 @@
     <string name="cancel">Cancel</string>
     <string name="airline_added_successfully">Air Line Added Successfully</string>
     <string name="fill_all_required_data">Fill All Required Data</string>
+    <string name="cancel_create_airline">cancel</string>
 </resources>

@@ -26,9 +26,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onBackPressed() {
-        if (currentScreenID == R.id.nav_airlineListFragment)
-            this.finishAffinity()
-        else
+//        if (currentScreenID == R.id.nav_airlineListFragment)
+//            this.finishAffinity()
+//        else
             super.onBackPressed()
     }
 }

@@ -21,7 +21,7 @@ class AirlinesRepo @Inject constructor(
     override suspend fun saveAirLinesList(airLines: List<AirlinesResponseItem>) =
         airlinesLocalDataSourceInterface.saveAirlinesList(airLines)
 
-    override suspend fun createAirlineNewRecord(airLineCreationRequest: AirLineCreationRequest): Response<AirLineCreationResponse> =
-        airlinesRemoteDataSourceInterface.createAirlineNewRecord(airLineCreationRequest)
-
+    override suspend fun createAirlineNewRecord(airLineCreationRequest: AirLineCreationRequest): Response<AirLineCreationResponse> {
+      return  airlinesRemoteDataSourceInterface.createAirlineNewRecord(airLineCreationRequest)
+    }
 }
